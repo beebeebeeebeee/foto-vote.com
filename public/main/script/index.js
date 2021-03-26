@@ -7,6 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   $("#form").submit(function (e) {
     e.preventDefault();
+
+    document.querySelector("#submit_button").disabled = true;
+    document.querySelector("#submit_button").innerHTML = "Uploading ...";
+
     var fd = new FormData($(this)[0]);
     $.ajax({
       url: $("#form").attr("action"),
