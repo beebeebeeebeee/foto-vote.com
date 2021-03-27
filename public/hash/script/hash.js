@@ -39,14 +39,18 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon3">comment</span>
                     </div>
-                    <input onkeyup="_comment(this.id, this.value)" id="${index}_comment" type="text" class="form-control" placeholder="optional" aria-describedby="basic-addon3">
+                    <input id="${index}_comment" type="text" class="form-control" placeholder="optional" aria-describedby="basic-addon3">
                 </div>
             </div>
         </div>
         `;
   });
   document.querySelector("#posts").innerHTML = temp1;
-  document.querySelector(`#count_left`).innerHTML = `${vote_result.filter(e=>{return e.vote !=null}).length}/${vote_result.length}`
+  document.querySelector(`#count_left`).innerHTML = `${
+    vote_result.filter((e) => {
+      return e.vote != null;
+    }).length
+  }/${vote_result.length}`;
 });
 
 function _click(id) {
@@ -64,13 +68,11 @@ function _click(id) {
   }
   console.log(vote_result);
 
-  document.querySelector(`#count_left`).innerHTML = `${vote_result.filter(e=>{return e.vote !=null}).length}/${vote_result.length}`
-}
-
-function _comment(id, value) {
-  [index, action] = id.split("_");
-  vote_result[index].comment = value;
-  console.log(vote_result);
+  document.querySelector(`#count_left`).innerHTML = `${
+    vote_result.filter((e) => {
+      return e.vote != null;
+    }).length
+  }/${vote_result.length}`;
 }
 
 function _clear_click(id) {
@@ -80,7 +82,13 @@ function _clear_click(id) {
   document.getElementById(`${id}_shit`).disabled = false;
 }
 
-function _submit_vote() {
+async function _submit_vote() {
+  await asyncForEach(vote_result, (el, i) => {
+    vote_result[i].comment =
+      document.getElementById(`${i}_comment`).value != ""
+        ? document.getElementById(`${i}_comment`).value
+        : null;
+  });
   fetch(`/api/vote/${hash}`, {
     method: "POST",
     headers: {
