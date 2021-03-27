@@ -39,10 +39,10 @@
             </div>
         </nav>
 
-        <header class="bg-primary text-white">
+        <header class="text-white">
             <div class="container text-center">
                 <h1>&nbsp;</h1>
-                <p class="lead" id="title"></p>
+                <p class="lead" id="titlse"></p>
             </div>
         </header>
 
@@ -50,27 +50,37 @@
             <div class="container">
                 <div class="card" style="margin-bottom: 10px;">
                     <div class="card-body" style="padding: 10px">
-                        <span style="vertical-align: middle; padding-left: 5px;">
-                            OWNER: <span id="name"></span>
-                        </span>
-                        <a href="./result.html"><button type="button" class="btn btn-info float-right" style="padding: 0 11px;">SEE
-                            RESULTS</button></a>
+                        <div class="alert alert-secondary text-center" role="alert" style="padding: 5px 0; margin-bottom: 7px;">
+                            <span id="title"></span>
+                        </div>
+                        <span style="vertical-align: middle;">OWNER: <span id="name"></span></span>
+                        <div class="dropdown float-right">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding: 0 5px; margin-bottom: 1px;">
+                                ···
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right bg-secondary" aria-labelledby="dropdownMenuButton" style="padding: 1px 0px;">
+                                <a class="dropdown-item bg-secondary text-white" href="./result.html">SEE RESULTS</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div id="posts"></div>
-                <div id="not_submit">
-                    <button class="btn btn-primary btn-lg btn-block" disabled>Please vote all photo before submit.</button>
-                </div>
-                <div id="submit" hidden>
-                    <button type="button" onclick="_submit_vote();" class="btn btn-primary btn-lg btn-block">Submit your
-                        vote!</button>
-                </div>
+
+                <div style="padding: 40px;"></div>
             </div>
         </section>
         <!-- Footer -->
-        <footer class="py-1 bg-dark" style="margin-top: 20px;">
+        <footer class="py-1 bg-dark fixed-bottom " style="margin-top: 20px;">
             <div class="container">
+                <button id="not_submit" class="btn btn-primary btn-lg btn-block container bottom-btn" disabled>Vote all
+                    before submit!
+                    <span class="badge badge-secondary"><span id="count_left"></span></span>
+                </button>
+                <button type="button" id="submit" onclick="_submit_vote();"
+                    class="btn btn-primary btn-lg btn-block container bottom-btn" hidden>Submit your
+                    vote!</button>
                 <p class="m-0 text-center text-white">Copyright &copy; beebeebeeebeee <span id="year"></span></p>
             </div>
             <!-- /.container -->

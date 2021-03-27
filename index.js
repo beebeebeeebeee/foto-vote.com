@@ -33,6 +33,12 @@ app.post("/api/vote/:hash", (req, res) => {
   res.status(200).send(data);
 });
 
+app.get("/api/vote/all", (req,res)=>{
+  const adapter = new FileSync("db.json");
+  const db = low(adapter);
+  res.status(200).send(db.get("posts").value().map((e)=>{return {id: e.id, name: e.name, title: e.title}}).reverse());
+})
+
 app.get("/api/vote/result/:hash", (req, res) => {
   const adapter = new FileSync("db.json");
   const db = low(adapter);

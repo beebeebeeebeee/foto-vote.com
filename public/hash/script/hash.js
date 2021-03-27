@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         `;
   });
   document.querySelector("#posts").innerHTML = temp1;
+  document.querySelector(`#count_left`).innerHTML = `${vote_result.filter(e=>{return e.vote !=null}).length}/${vote_result.length}`
 });
 
 function _click(id) {
@@ -62,6 +63,8 @@ function _click(id) {
     document.querySelector(`#not_submit`).hidden = true;
   }
   console.log(vote_result);
+
+  document.querySelector(`#count_left`).innerHTML = `${vote_result.filter(e=>{return e.vote !=null}).length}/${vote_result.length}`
 }
 
 function _comment(id, value) {

@@ -5,6 +5,24 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#copied").hidden = false;
   });
 
+  fetch("/api/vote/all")
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      temp1 = "";
+      res.forEach((el)=>{
+        temp1+=`
+        <tr>
+          <th scope="row"><a href="./${el.id}">${el.id}</a></th>
+          <td>${el.name}</td>
+          <td>${el.title}</td>
+        </tr>
+        `
+      })
+      document.querySelector("#_recent_vote").innerHTML = temp1;
+    });
+
   $("#form").submit(function (e) {
     e.preventDefault();
 
@@ -31,13 +49,18 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-function _on_select(e) {
-  if (e.files.length > 20) {
-    clearFileInput(e);
-    document.querySelector("#file_warn").hidden = false;
-  } else {
-    document.querySelector("#file_warn").hidden = true;
-  }
+// function _on_select(e) {
+//   if (e.files.length > 20) {
+//     clearFileInput(e);
+//     document.querySelector("#file_warn").hidden = false;
+//   } else {
+//     document.querySelector("#file_warn").hidden = true;
+//   }
+// }
+
+function _show_display_form() {
+  document.querySelector("#_display_form").hidden = false;
+  document.querySelector("#_display_main").hidden = true;
 }
 
 function clearFileInput(ctrl) {
