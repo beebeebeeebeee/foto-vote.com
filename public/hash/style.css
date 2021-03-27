@@ -3,3 +3,11 @@
     padding: 2px 1px;
     margin: 0.5px 3px;
 }
+
+.vote-img{
+        width: 100%;
+        height: 82vh;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+}
