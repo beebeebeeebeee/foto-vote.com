@@ -4,3 +4,5 @@ public/hash/temp
 node_modules
 
 db.json
+
+.env

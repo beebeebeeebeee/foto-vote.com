@@ -23,15 +23,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             )}</h5>
             <img src="./images/${element}" style="width: 100%"></img>
             <div class="card-body" style="padding: 0.5rem;">
-                <button onclick="_click(this.id)" id="${index}_like" class="btn btn-success" style="width: 24%">LIKE</button>
-                <button onclick="_click(this.id)" id="${index}_ok" class="btn btn-primary" style="width: 24%">OKAY</button>
-                <button onclick="_click(this.id)" id="${index}_dislike" class="btn btn-warning" style="width: 24%">DISLIKE</button>
-                <button onclick="_click(this.id)" id="${index}_shit" class="btn btn-danger" style="width: 24%">SHIT</button>
+                <div class="d-flex justify-content-center">
+                  <button onclick="_click(this.id)" id="${index}_like" class="btn btn-success vote-btn">LIKE</button>
+                  <button onclick="_click(this.id)" id="${index}_ok" class="btn btn-primary vote-btn">OKAY</button>
+                  <button onclick="_click(this.id)" id="${index}_dislike" class="btn btn-warning vote-btn">DISLIKE</button>
+                  <button onclick="_click(this.id)" id="${index}_shit" class="btn btn-danger vote-btn">SHIT</button>
+                </div>
                 <div class="input-group mb-3" style="margin-top: 7px; margin-bottom: 0px! important;">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon3">comment</span>
                     </div>
-                    <input onkeyup="_comment(this.id, this.value)" id="${index}_comment" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                    <input onkeyup="_comment(this.id, this.value)" id="${index}_comment" type="text" class="form-control" placeholder="optional" aria-describedby="basic-addon3">
                 </div>
             </div>
         </div>
@@ -51,6 +53,7 @@ function _click(id) {
     })
   ) {
     document.querySelector(`#submit`).hidden = false;
+    document.querySelector(`#not_submit`).hidden = true;
   }
   console.log(vote_result);
 }
@@ -75,5 +78,7 @@ function _submit_vote() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(vote_result),
-  }).then(res=>{window.location = "./result.html"});
+  }).then((res) => {
+    window.location = "./result.html";
+  });
 }

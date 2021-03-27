@@ -55,7 +55,7 @@ app.get("/api/vote/result/:hash", (req, res) => {
           .indexOf(temp2.element);
         temp1[index].vote.push(temp2.vote);
         temp1[index].vote_ab[temp2.vote] ++;
-        temp2.comment == null ? null : temp1[index].comment.push(temp2.comment);
+        temp2.comment == null || temp2.comment.trim() == "" ? null : temp1[index].comment.push(temp2.comment);
       } else {
         temp1.push({
           element: temp2.element,
@@ -66,7 +66,7 @@ app.get("/api/vote/result/:hash", (req, res) => {
             dislike: temp2.vote == "dislike" ? 1 : 0,
             shit: temp2.vote == "shit" ? 1 : 0,
           },
-          comment: temp2.comment == null ? [] : [temp2.comment],
+          comment: temp2.comment == null || temp2.comment.trim() == "" ? [] : [temp2.comment],
           marks: 0,
           length: 0,
         });

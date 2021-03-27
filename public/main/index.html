@@ -61,12 +61,20 @@
                     </div>
                     <div class="mb-3">
                         <label for="files" class="form-label">Your images</label>
-                        <input class="form-control" type="file" id="files" name="files" multiple required>
-                        <small class="form-text text-muted">choose your works to upload for others vote</small>
+                        <input class="form-control" type="file" id="files" name="files" onchange="_on_select(this)"
+                            accept="image/*" multiple required>
+                        <div class="alert alert-warning" role="alert" style="margin-top: 5px;" hidden id="file_warn">
+                            Please choose only 20 photos at most.
+                        </div>
+                        <small class="form-text text-muted">
+                            choose your works to upload for others vote.<br>
+                            the maximum number of photo is: 20.
+                        </small>
                     </div>
                     <button type="submit" id="submit_button" class="btn btn-primary">Upload</button>
                     <small class="form-text text-muted">
-                        the works submitted that will published on the internet, please consider before upload your works.<br>
+                        the works submitted that will published on the internet, please consider before upload your
+                        works.<br>
                         the url to voting page will show to you after uploaded, please copy and save that.
                     </small>
                 </form>

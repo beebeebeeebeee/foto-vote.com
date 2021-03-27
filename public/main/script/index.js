@@ -30,3 +30,21 @@ document.addEventListener("DOMContentLoaded", () => {
     return false;
   });
 });
+
+function _on_select(e) {
+  if (e.files.length > 20) {
+    clearFileInput(e);
+    document.querySelector("#file_warn").hidden = false;
+  } else {
+    document.querySelector("#file_warn").hidden = true;
+  }
+}
+
+function clearFileInput(ctrl) {
+  try {
+    ctrl.value = null;
+  } catch (ex) {}
+  if (ctrl.value) {
+    ctrl.parentNode.replaceChild(ctrl.cloneNode(true), ctrl);
+  }
+}

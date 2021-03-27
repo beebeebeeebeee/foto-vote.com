@@ -25,6 +25,7 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js'></script>
     <!-- End of include plugin-->
     <title>vote | foto-vote</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -58,6 +59,9 @@
                 </div>
 
                 <div id="posts"></div>
+                <div id="not_submit">
+                    <button class="btn btn-primary btn-lg btn-block" disabled>Please vote all photo before submit.</button>
+                </div>
                 <div id="submit" hidden>
                     <button type="button" onclick="_submit_vote();" class="btn btn-primary btn-lg btn-block">Submit your
                         vote!</button>
