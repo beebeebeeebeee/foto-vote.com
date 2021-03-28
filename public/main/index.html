@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <script src="./script/is_login.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +25,7 @@
     </script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js'></script>
     <!-- End of include plugin-->
-    <title>upload | foto-vote</title>
+    <title>foto-vote</title>
     <script src="./script/index.js"></script>
 </head>
 
@@ -35,6 +36,11 @@
             text-decoration: none;
             /* no underline */
         }
+
+        .dropdown-menu-right {
+            right: 0;
+            left: auto;
+        }
     </style>
 
     <body id="page-top">
@@ -43,7 +49,21 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
             <div class="container">
                 <a class="navbar-brand js-scroll-trigger" href="/">foto-vote.com</a>
-                <span class="text-white">Welcome, temp_user1!</span>
+                <!-- Example split danger button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info"><span id="user_name"></span></button>
+                    <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <span class="dropdown-item" onclick="_show_display_form();">Create new vote</span>
+                        <!-- <span class="dropdown-item" onclick="_show_display_form();">My vote</span>
+                        <span class="dropdown-item" onclick="_show_display_form();">Recent vote</span> -->
+                        <div class="dropdown-divider"></div>
+                        <span class="dropdown-item" onclick="logout()">logout</span>
+                    </div>
+                </div>
             </div>
         </nav>
 
@@ -56,8 +76,6 @@
 
         <section>
             <div class="container" id="_display_main">
-                <button type="button" class="btn btn-success btn-lg btn-block" onclick="_show_display_form();" style="margin-bottom: 10px;">CREATE
-                    NEW VOTE!</button>
                 <table class="table table-striped table-sm">
                     <thead>
                         <tr>
@@ -76,11 +94,6 @@
             <div class="container" id="_display_form" hidden>
                 <form action="/api/upload" method="post" id="form">
                     <div class="mb-3">
-                        <label for="name" class="form-label">name</label>
-                        <input type="text" class="form-control" name="name" id="name" required>
-                        <small class="form-text text-muted">a name to identify you</small>
-                    </div>
-                    <div class="mb-3">
                         <label for="Title" class="form-label">title</label>
                         <input type="text" class="form-control" id="Title" name="Title" required>
                         <small class="form-text text-muted">give a title for this group of works</small>
@@ -97,6 +110,8 @@
                             the recommend number of photo per vote is: 10-20.
                         </small>
                     </div>
+                    <input type="text" class="form-control" name="name" id="submit_name" value="" hidden>
+                    <input type="text" class="form-control" name="user_id" id="submit_id" value="" hidden>
                     <button type="submit" id="submit_button" class="btn btn-primary">Upload</button>
                     <small class="form-text text-muted">
                         the works submitted that will published on the internet, please consider before upload your

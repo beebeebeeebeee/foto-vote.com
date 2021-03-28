@@ -2,6 +2,7 @@ hash = window.location.pathname.replace(/\//g, "");
 console.log(hash);
 vote_result = [];
 
+
 document.addEventListener("DOMContentLoaded", async () => {
   res = await fetch(`/api/data/${hash}`);
   try {
@@ -23,6 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     console.log(img_direction);
     temp1 += `
+        <div id="post_${index}"></div>
         <div class="card" style="margin-bottom: 10px">
             <h5 class="card-header" style="font-size: 10px;">${element.slice(
               element.indexOf("-") + 1
@@ -55,6 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function _click(id) {
   [index, action] = id.split("_");
+  index = parseInt(index)
   _clear_click(index);
   document.getElementById(`${id}`).disabled = true;
   vote_result[index].vote = action;
@@ -67,6 +70,12 @@ function _click(id) {
     document.querySelector(`#not_submit`).hidden = true;
   }
   console.log(vote_result);
+
+  console.log(index+1, vote_result.length)
+  if (index+1 != vote_result.length) {
+    index++
+    fnc_scrollto(getPosition(document.querySelector(`#post_${index}`)).y-20); 
+  }
 
   document.querySelector(`#count_left`).innerHTML = `${
     vote_result.filter((e) => {
@@ -124,3 +133,61 @@ async function asyncForEach(array, callback) {
     await callback(array[index], index, array);
   }
 }
+
+function getPosition (element) {
+  var x = 0;
+  var y = 0;
+  // 搭配上面的示意圖可比較輕鬆理解為何要這麼計算
+  while ( element ) {
+    x += element.offsetLeft - element.scrollLeft + element.clientLeft;
+    y += element.offsetTop - element.scrollLeft + element.clientTop;
+    element = element.offsetParent;
+  }
+
+  return { x: x, y: y };
+}
+
+var fnc_scrollto = function(to,id){
+  var smoothScrollFeature = 'scrollBehavior' in document.documentElement.style;
+  var articles = document.querySelectorAll("ul#content > li"), i;
+  if (to == 'elem') to = articles[id].offsetTop;
+  var i = parseInt(window.pageYOffset);
+  if ( i != to ) {
+      if (!smoothScrollFeature) {
+          to = parseInt(to);
+          if (i < to) {
+              var int = setInterval(function() {
+                  if (i > (to-20)) i += 1;
+                  else if (i > (to-40)) i += 3;
+                  else if (i > (to-80)) i += 8;
+                  else if (i > (to-160)) i += 18;
+                  else if (i > (to-200)) i += 24;
+                  else if (i > (to-300)) i += 40;
+                  else i += 60;
+                  window.scroll(0, i);
+                  if (i >= to) clearInterval(int);
+              }, 15);
+          }
+          else {
+              var int = setInterval(function() {
+                  if (i < (to+20)) i -= 1;
+                  else if (i < (to+40)) i -= 3;
+                  else if (i < (to+80)) i -= 8;
+                  else if (i < (to+160)) i -= 18;
+                  else if (i < (to+200)) i -= 24;
+                  else if (i < (to+300)) i -= 40;
+                  else i -= 60;
+                  window.scroll(0, i);
+                  if (i <= to) clearInterval(int);
+              }, 15);
+          }
+      }
+      else {
+          window.scroll({
+              top: to,
+              left: 0,
+              behavior: 'smooth'
+          });
+      }
+  }
+};

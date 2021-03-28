@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Start of include plugin-->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous">
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js'></script>
+    <!-- End of include plugin-->
+    <title>foto-vote</title>
+    <script src="./script/login.js"></script>
+</head>
+
+<body>
+    <style>
+        a {
+            color: black;
+            text-decoration: none;
+            /* no underline */
+        }
+    </style>
+
+    <body id="page-top">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="/">foto-vote.com</a>
+            </div>
+        </nav>
+
+        <header class=" text-white">
+            <div class="container text-center">
+                <h1>&nbsp;</h1>
+                <p class="lead"></p>
+            </div>
+        </header>
+
+        <div class="container-fluid">
+            <div class="container">
+                <h2 class="text-center" id="title">foto-vote login</h2>
+                <hr>
+                <div class="row">
+                    <div class="col-md-5">
+                        <form role="form" id="login" action="javascript:void(0);">
+                            <fieldset>
+                                <p class="text-uppercase"> Login using your account: </p>
+                                <div class="form-group">
+                                    <input type="text" name="account" id="login_account" class="form-control input-lg"
+                                        placeholder="Account">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" id="login_password"
+                                        class="form-control input-lg" placeholder="Password">
+                                </div>
+                                <div class="alert alert-danger" role="alert" id="login_alert" hidden>
+                                    This is a danger alert—check it out!
+                                </div>
+                                <div>
+                                    <input type="submit" class="btn btn-md btn-primary" value="Login">
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <div class="col-md-2" style="margin-bottom: 10px;">
+                        <!-------null------>
+                        <hr>
+                    </div>
+                    <div class="col-md-5">
+                        <form role="form" id="register" action="javascript:void(0);">
+                            <fieldset>
+                                <p class="text-uppercase pull-center"> NOT REGISTERED YET? SIGN UP HERE:</p>
+                                <div class="form-group">
+                                    <input type="text" name="temp1" id="register_username"
+                                        class="form-control input-lg" placeholder="Display name. e.g. Bee Mak">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="username" id="register_account"
+                                        class="form-control input-lg" placeholder="Account">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" id="register_password"
+                                        class="form-control input-lg" placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password2" id="register_password2"
+                                        class="form-control input-lg" placeholder="Please Enter Your Password Again">
+                                </div>
+                                <div class="alert alert-danger" role="alert" id="register_alert" hidden>
+                                    This is a danger alert—check it out!
+                                </div>
+                                <div>
+                                    <input type="submit" class="btn btn-md btn-primary" value=" Register">
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="padding: 20px;"></div>
+        <footer class="py-1 bg-dark fixed-bottom" style="margin-top: 20px;">
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; beebeebeeebeee <span id="year"></span></p>
+            </div>
+            <!-- /.container -->
+        </footer>
+
+        <!-- Custom JavaScript for this theme -->
+        <script src="script/scrolling-nav.js"></script>
+
+        <script>
+            document.querySelector("#year").innerHTML = (new Date()).getFullYear();
+        </script>
+
+    </body>
+    <div class="container">
+
+</body>
+
+</html>

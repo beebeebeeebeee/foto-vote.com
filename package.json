@@ -4,21 +4,31 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "reset": "rm db.json; rm -r public/hash/images"
   },
   "nodemonConfig": {
-    "ignore": ["public/*","*.json"]
+    "ignore": [
+      "public/*",
+      "*.json"
+    ]
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "fs": "^0.0.1-security",
+    "joi": "^17.4.0",
+    "jsonwebtoken": "^8.5.1",
     "lowdb": "^1.0.0",
     "mkdirp": "^1.0.4",
     "multer": "^1.4.2",
-    "sharp": "^0.27.2"
+    "sharp": "^0.27.2",
+    "smoothscroll-polyfill": "^0.4.4",
+    "uuid": "^8.3.2"
   }
 }

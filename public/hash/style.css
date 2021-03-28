@@ -1,17 +1,17 @@
-.vote-btn{
+.vote-btn {
     width: 24%;
     padding: 2px 1px;
     margin: 0.5px 3px;
 }
 
-.vote-img{
-        width: 100%;
-        height: 68vh;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
+.vote-img {
+    width: 100%;
+    height: 62vh;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }
 
-.bottom-btn{
+.bottom-btn {
     padding: 0 5px;
 }
