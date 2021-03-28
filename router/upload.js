@@ -5,6 +5,7 @@ const sharp = require("sharp");
 var fs = require("fs");
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
+var sizeOf = require("image-size");
 
 //create temp and images folder
 var createFolder = require("./function/createFolder");
@@ -29,21 +30,39 @@ router.post("/", upload.array("files", 200), async (req, res) => {
   form_title = req.body.Title;
   form_id = req.body.user_id;
   images = req.files.map(function (el) {
-    return el.filename;
+    console.log(el);
+    return { filename: el.filename, portrait: null };
   });
-  images.forEach(async (el) => {
-    await sharp(`./public/hash/temp/${el}`, { failOnError: false })
-      .jpeg({ quality: 40 })
+  
+  await asyncForEach(images, async (el, index) => {
+    await sharp(`./public/hash/temp/${el.filename}`, { failOnError: false })
+      .jpeg({ quality: 30 })
       .withMetadata()
-      .toFile(`./public/hash/images/${el}`);
-    fs.unlinkSync(`./public/hash/temp/${el}`);
+      .toFile(`./public/hash/images/${el.filename}`);
+    var dimensions = sizeOf(`./public/hash/temp/${el.filename}`);
+    console.log(dimensions);
+    images[index].portrait = dimensions.height > dimensions.width;
+    fs.unlinkSync(`./public/hash/temp/${el.filename}`);
   });
 
   db.get("posts")
-    .push({ id: hash, name: form_name, user_id: form_id, title: form_title, images: images, votes: [] })
+    .push({
+      id: hash,
+      name: form_name,
+      user_id: form_id,
+      title: form_title,
+      images: images,
+      votes: [],
+    })
     .write();
 
   res.status(200).send({ hash: hash });
 });
+
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
 
 module.exports = router;

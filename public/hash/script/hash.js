@@ -16,18 +16,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   temp1 = "";
   await asyncForEach(data.images, async (element, index) => {
-    vote_result.push({ element: element, vote: null, comment: null });
-    img_direction = `<img src='./images/${element}' style="width: 100%;">`;
-    const dimensions = await imageDimensions(`./images/${element}`);
-    if (dimensions.height > dimensions.width) {
-      img_direction = `<div class="vote-img" style="background-image: url('./images/${element}');"></div>`;
+    vote_result.push({ element: element.filename, vote: null, comment: null });
+    img_direction = `<img src='./images/${vote_result[index].element}' style="width: 100%;">`;
+    if (element.portrait) {
+      img_direction = `<div class="vote-img" style="background-image: url('./images/${vote_result[index].element}');"></div>`;
     }
-    console.log(img_direction);
     temp1 += `
         <div id="post_${index}"></div>
         <div class="card" style="margin-bottom: 10px">
-            <h5 class="card-header" style="font-size: 10px;">${element.slice(
-              element.indexOf("-") + 1
+            <h5 class="card-header" style="font-size: 10px;">${vote_result[index].element.slice(
+              vote_result[index].element.indexOf("-") + 1
             )}</h5>
             ${img_direction}
             <div class="card-body" style="padding: 0.5rem;">
