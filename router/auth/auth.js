@@ -8,7 +8,7 @@ const {
   loginValidation,
 } = require("./function/validation");
 
-const { getOne, register, getData } = require("./function/access");
+const { getOne, getName, register, getData } = require("./function/access");
 const { json } = require("express");
 
 const COOKIE_TIME = 3600000 * 24 * 30 * 12;
@@ -16,11 +16,15 @@ const COOKIE_TIME = 3600000 * 24 * 30 * 12;
 router.post("/register", async (req, res) => {
   let body = req.body;
   const { error } = registerValidation(body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).send({ body: error.details[0].message });
 
   const user = await getOne(body.account);
   console.log(user);
-  if (user) return res.status(400).send("account already exist!");
+  if (user) return res.status(400).send({ body: "account already exist!" });
+
+  const name = await getName(body.name);
+  console.log(name);
+  if (name) return res.status(400).send({ body: "username already exist!" });
 
   const salt = await bcrypt.genSalt(10);
   body.password = await bcrypt.hash(body.password, salt);
@@ -49,6 +53,7 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", verified, async (req, res) => {
   let body = req.body;
+  body.account = body.account ? body.account.trim() : null;
 
   const { error } = loginValidation(body);
   if (error) return res.status(400).send({ body: error.details[0].message });

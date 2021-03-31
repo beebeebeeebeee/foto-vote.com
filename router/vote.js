@@ -27,6 +27,25 @@ router.get("/all", (req, res) => {
   );
 });
 
+router.get("/:name", (req, res) => {
+  const adapter = new FileSync("db.json");
+  const db = low(adapter);
+  console.log(db
+    .get("posts")
+    .filter({ name: req.params.name })
+    .value())
+  res.status(200).send(
+    db
+      .get("posts")
+      .filter({ name: req.params.name })
+      .value()
+      .map((e) => {
+        return { id: e.id, name: e.name, title: e.title };
+      })
+      .reverse()
+  );
+});
+
 router.get("/result/:hash", (req, res) => {
   const adapter = new FileSync("db.json");
   const db = low(adapter);

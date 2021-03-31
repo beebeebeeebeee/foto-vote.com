@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Cutive+Mono&display=swap');
+
+.title{
+    font-family: 'Lobster', cursive;
+}
+
+.hash{
+    font-family: 'Cutive Mono', monospace;
+}

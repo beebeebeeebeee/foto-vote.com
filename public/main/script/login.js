@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
       credentials: "include",
       withCredentials: true,
       body: JSON.stringify({
-        name: document.querySelector("#register_username").value,
+        name: document.querySelector("#register_user_temp1").value,
         account: document.querySelector("#register_account").value,
         password: document.querySelector("#register_password").value,
       }),

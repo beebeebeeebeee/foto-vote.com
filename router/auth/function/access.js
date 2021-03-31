@@ -8,6 +8,13 @@ const getOne = async (account) => {
   return await db.get("account").find({ account: account }).value();
 };
 
+const getName = async (username) => {
+  const adapter = new FileSync("db.json");
+  const db = low(adapter);
+
+  return await db.get("account").find({ name: username }).value();
+};
+
 const register = async (data) => {
   const adapter = new FileSync("db.json");
   const db = low(adapter);
@@ -32,4 +39,4 @@ const getData = async (id) => {
   return await db.get("account").find({ id: id }).value();
 };
 
-module.exports = { getOne, register, getData };
+module.exports = { getOne, getName, register, getData };
