@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //static part
 app.use("/", express.static("public/main"));
 app.use("/:hash", express.static("public/hash"));
+app.use("/global", express.static("public/global"));
 
 //api part
 app.use("/api/upload", require("./router/upload"));

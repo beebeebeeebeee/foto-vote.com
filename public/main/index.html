@@ -2,35 +2,24 @@
 <html lang="en">
 
 <head>
-    <script src="./script/is_login.js"></script>
-    <link rel="stylesheet" href="./golbal.css">
+    <script type="module" src="./script/is_login.js"></script>
+
+    <script type="module" src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script type="module">
+        $.get('/global/head.html', function (response) {
+            $('head').append(response);
+        });
+    </script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Start of include plugin-->
-    <script src="https://code.jquery.com/jquery-3.3.1.js"
-        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous">
-    </script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
-    </script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js'></script>
-    <!-- End of include plugin-->
+
     <title>foto-vote</title>
     <script src="./script/index.js"></script>
 </head>
 
-<body>
+<body hidden>
     <style>
         a {
             color: black;
@@ -44,7 +33,7 @@
         }
     </style>
 
-    <body id="page-top">
+    <div id="page-top">
 
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
@@ -52,7 +41,8 @@
                 <a class="navbar-brand js-scroll-trigger title" href="/">foto-vote.com</a>
                 <!-- Example split danger button -->
                 <div class="btn-group">
-                    <button type="button" class="btn btn-info" onclick="_show_user();"><span id="user_name"></span></button>
+                    <button type="button" class="btn btn-info" onclick="_show_user();"><span
+                            id="user_name"></span></button>
                     <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="sr-only">Toggle Dropdown</span>
@@ -94,70 +84,68 @@
                 <div id="_display_user_recent_vote"></div>
             </div>
 
+    </div>
+    <div class="container" id="_display_form" hidden>
+        <form action="/api/upload" method="post" id="form">
+            <div class="mb-3">
+                <label for="Title" class="form-label">title</label>
+                <input type="text" class="form-control" id="Title" name="Title" required>
+                <small class="form-text text-muted">give a title for this group of works</small>
             </div>
-            <div class="container" id="_display_form" hidden>
-                <form action="/api/upload" method="post" id="form">
-                    <div class="mb-3">
-                        <label for="Title" class="form-label">title</label>
-                        <input type="text" class="form-control" id="Title" name="Title" required>
-                        <small class="form-text text-muted">give a title for this group of works</small>
-                    </div>
-                    <div class="mb-3">
-                        <label for="files" class="form-label">Your images</label>
-                        <input class="form-control" type="file" id="files" name="files" accept="image/*" multiple
-                            required>
-                        <!-- <div class="alert alert-warning" role="alert" style="margin-top: 5px;" hidden id="file_warn">
+            <div class="mb-3">
+                <label for="files" class="form-label">Your images</label>
+                <input class="form-control" type="file" id="files" name="files" accept="image/*" multiple required>
+                <!-- <div class="alert alert-warning" role="alert" style="margin-top: 5px;" hidden id="file_warn">
                             Please choose only 20 photos at most.
                         </div> -->
-                        <small class="form-text text-muted">
-                            choose your works to upload for others vote.<br>
-                            the recommend number of photo per vote is: 10-20.
-                        </small>
-                    </div>
-                    <input type="text" class="form-control" name="name" id="submit_name" value="" hidden>
-                    <input type="text" class="form-control" name="user_id" id="submit_id" value="" hidden>
-                    <button type="submit" id="submit_button" class="btn btn-primary">Upload</button>
-                    <small class="form-text text-muted">
-                        the works submitted that will published on the internet, please consider before upload your
-                        works.<br>
-                        the url to voting page will show to you after uploaded, please copy and save that.
-                    </small>
-                </form>
-
-                <div id="result" hidden>
-                    url to voting page for your works:
-                    <div class="form-group mx-sm-3 mb-2  flex-fill">
-                        <label for="ren_url" class="sr-only">ren_url</label>
-                        <input type="text" class="form-control flex-fill" id="ren_url">
-                    </div>
-                    <div class="alert alert-success" role="alert" hidden id="copied">
-                        Copied to clipboard!
-                        <small class="form-text text-muted">for mobile user, please click copy to copy.</small>
-                    </div>
-                    <small class="form-text text-muted">
-                        you can now copy and send this url to your friends to help you vote your works.<br>
-                        the url only show to you once, please remember or store this url into your note or brain.
-                    </small>
-                </div>
+                <small class="form-text text-muted">
+                    choose your works to upload for others vote.<br>
+                    the recommend number of photo per vote is: 10-20.
+                </small>
             </div>
-        </section>
-        <!-- Footer -->
-        <div style="padding: 20px;"></div>
-        <footer class="py-1 bg-dark fixed-bottom" style="margin-top: 20px;">
-            <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; beebeebeeebeee <span id="year"></span></p>
+            <input type="text" class="form-control" name="name" id="submit_name" value="" hidden>
+            <input type="text" class="form-control" name="user_id" id="submit_id" value="" hidden>
+            <button type="submit" id="submit_button" class="btn btn-primary">Upload</button>
+            <small class="form-text text-muted">
+                the works submitted that will published on the internet, please consider before upload your
+                works.<br>
+                the url to voting page will show to you after uploaded, please copy and save that.
+            </small>
+        </form>
+
+        <div id="result" hidden>
+            url to voting page for your works:
+            <div class="form-group mx-sm-3 mb-2  flex-fill">
+                <label for="ren_url" class="sr-only">ren_url</label>
+                <input type="text" class="form-control flex-fill" id="ren_url">
             </div>
-            <!-- /.container -->
-        </footer>
+            <div class="alert alert-success" role="alert" hidden id="copied">
+                Copied to clipboard!
+                <small class="form-text text-muted">for mobile user, please click copy to copy.</small>
+            </div>
+            <small class="form-text text-muted">
+                you can now copy and send this url to your friends to help you vote your works.<br>
+                the url only show to you once, please remember or store this url into your note or brain.
+            </small>
+        </div>
+    </div>
+    </section>
+    <!-- Footer -->
+    <div style="padding: 20px;"></div>
+    <footer class="py-1 bg-dark fixed-bottom" style="margin-top: 20px;">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; beebeebeeebeee <span id="year"></span></p>
+        </div>
+        <!-- /.container -->
+    </footer>
 
-        <!-- Custom JavaScript for this theme -->
-        <script src="script/scrolling-nav.js"></script>
+    <!-- Custom JavaScript for this theme -->
+    <script src="script/scrolling-nav.js"></script>
 
-        <script>
-            document.querySelector("#year").innerHTML = (new Date()).getFullYear();
-        </script>
+    <script>
+        document.querySelector("#year").innerHTML = (new Date()).getFullYear();
+    </script>
 
-    </body>
     <div class="container">
 
 </body>
