@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   document.querySelector("#title").innerHTML = data.title;
+  document.title = `${data.title} - foto-vote.com`;
   document.querySelector("#name").innerHTML = data.name;
 
   temp1 = "";
