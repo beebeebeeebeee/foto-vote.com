@@ -2,18 +2,12 @@
 <html lang="en">
 
 <head>
-    <script type="module" src="https://code.jquery.com/jquery-3.3.1.js"
-        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script type="module">
-        $.get('/global/head.html', function (response) {
-            $('head').append(response);
-        });
-    </script>
+    <%- include ("../global/head.html") %>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>foto-vote</title>
+    <title><%= title %> - result - foto-vote.com</title>
 </head>
 
 <body hidden>
@@ -58,7 +52,7 @@
             <!-- /.container -->
         </footer>
 
-        <script src="script/result.js"></script>
+        <script src="/static/hash/script/result.js"></script>
 
         <script>
             document.querySelector("#year").innerHTML = (new Date()).getFullYear();

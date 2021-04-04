@@ -2,19 +2,13 @@
 <html lang="en">
 
 <head>
-    <script type="module" src="https://code.jquery.com/jquery-3.3.1.js"
-        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script type="module">
-        $.get('/global/head.html', function (response) {
-            $('head').append(response);
-        });
-    </script>
+    <%- include ("../global/head.html") %>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>foto-vote</title>
-    <link rel="stylesheet" href="style.css">
+    <title><%= title %> - foto-vote.com</title>
+    <link rel="stylesheet" href="/static/hash/style.css">
 </head>
 
 <body hidden>
@@ -52,7 +46,7 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right bg-secondary"
                                 aria-labelledby="dropdownMenuButton" style="padding: 1px 0px;">
-                                <a class="dropdown-item bg-secondary text-white" href="./result.html">SEE RESULTS</a>
+                                <a class="dropdown-item bg-secondary text-white" href="/<%= hash %>/result">SEE RESULTS</a>
                             </div>
                         </div>
                     </div>
@@ -78,7 +72,7 @@
             <!-- /.container -->
         </footer>
 
-        <script src="script/hash.js"></script>
+        <script src="/static/hash/script/hash.js"></script>
 
         <script>
             document.querySelector("#year").innerHTML = (new Date()).getFullYear();

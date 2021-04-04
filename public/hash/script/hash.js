@@ -12,15 +12,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   document.querySelector("#title").innerHTML = data.title;
-  document.title = `${data.title} - foto-vote.com`;
   document.querySelector("#name").innerHTML = data.name;
 
   temp1 = "";
   await asyncForEach(data.images, async (element, index) => {
     vote_result.push({ element: element.filename, vote: null, comment: null });
-    img_direction = `<img src='./images/${vote_result[index].element}' style="width: 100%;">`;
+    img_direction = `<img src='/static/hash/images/${vote_result[index].element}' style="width: 100%;">`;
     if (element.portrait) {
-      img_direction = `<div class="vote-img" style="background-image: url('./images/${vote_result[index].element}');"></div>`;
+      img_direction = `<div class="vote-img" style="background-image: url('/static/hash/images/${vote_result[index].element}');"></div>`;
     }
     temp1 += `
         <div id="post_${index}"></div>
@@ -104,7 +103,7 @@ async function _submit_vote() {
     },
     body: JSON.stringify(vote_result),
   }).then((res) => {
-    window.location = "./result.html";
+    window.location = `/${hash}/result`;
   });
 }
 

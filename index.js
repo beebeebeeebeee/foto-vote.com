@@ -9,6 +9,7 @@ const FileSync = require("lowdb/adapters/FileSync");
 const adapter = new FileSync("db.json");
 const db = low(adapter);
 
+app.set('view engine', 'ejs');
 
 // Set some defaults (required if your JSON file is empty)
 db.defaults({ posts: [], account: [] }).write();
@@ -19,9 +20,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //static part
-app.use("/", express.static("public/main"));
-app.use("/:hash", express.static("public/hash"));
+app.use("/static/", express.static("public/main"));
+app.use("/static/hash", express.static("public/hash"));
 app.use("/global", express.static("public/global"));
+
+//ejs part
+app.use("/", require("./router/ejs/main"));
+app.use("/", require("./router/ejs/hash"));
 
 //api part
 app.use("/api/upload", require("./router/upload"));

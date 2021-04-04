@@ -2,21 +2,14 @@
 <html lang="en">
 
 <head>
-    <script src="./script/is_login.js"></script>
-
-    <script type="module" src="https://code.jquery.com/jquery-3.3.1.js"
-        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script type="module">
-        $.get('/global/head.html', function (response) {
-            $('head').append(response);
-        });
-    </script>
+    <script src="/static/script/is_login.js"></script>
+    <%- include ("../global/head.html") %>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>foto-vote</title>
-    <script src="./script/index.js"></script>
+    <script src="/static/script/index.js"></script>
 </head>
 
 <body hidden>
@@ -112,22 +105,23 @@
                 the url to voting page will show to you after uploaded, please copy and save that.
             </small>
         </form>
+    </div>
 
-        <div id="result" hidden>
-            url to voting page for your works:
-            <div class="form-group mx-sm-3 mb-2  flex-fill">
-                <label for="ren_url" class="sr-only">ren_url</label>
-                <input type="text" class="form-control flex-fill" id="ren_url">
-            </div>
-            <div class="alert alert-success" role="alert" hidden id="copied">
-                Copied to clipboard!
-                <small class="form-text text-muted">for mobile user, please click copy to copy.</small>
-            </div>
-            <small class="form-text text-muted">
-                you can now copy and send this url to your friends to help you vote your works.<br>
-                the url only show to you once, please remember or store this url into your note or brain.
-            </small>
+    <div class="container" id="result" hidden>
+        url to voting page for your works:
+        <div class="form-group mx-sm-3 mb-2  flex-fill">
+            <label for="ren_url" class="sr-only">ren_url</label>
+            <input type="text" class="form-control flex-fill" id="ren_url">
         </div>
+        <div class="alert alert-success" role="alert" hidden id="copied">
+            Copied to clipboard!
+            <small class="form-text text-muted">for mobile user, please click copy to copy.</small>
+        </div>
+        <small class="form-text text-muted">
+            you can now copy and send this url to your friends to help you vote your works.<br>
+            the url only show to you once, please remember or store this url into your note or brain.
+        </small>
+    </div>
     </div>
     </section>
     <!-- Footer -->

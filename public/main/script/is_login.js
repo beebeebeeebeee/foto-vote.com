@@ -7,7 +7,7 @@ fetch("/api/user/login", {
   withCredentials: true,
 }).then((res) => {
   console.log(res);
-  if (res.status == 400) window.location.href = `./login.html`;
+  if (res.status == 400) window.location.href = `./login`;
 });
 
 function logout() {
@@ -19,7 +19,7 @@ function logout() {
     credentials: "include",
     withCredentials: true,
   }).then((res) => {
-    if (res.status == 200) window.location.href = `./login.html`;
+    if (res.status == 200) window.location.href = `./login`;
   });
 }
 
