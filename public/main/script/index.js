@@ -11,13 +11,18 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then((res) => {
       temp1 = "";
+      console.log(res);
       res.forEach((el) => {
         temp1 += `
         <div class="card" style="margin: 5px 0;">
         <div class="card-body row" style="padding: 5px 14px;">
-                <div class="col hash"><a href="./${el.id}">${el.id}</a></div>
-                <div class="col text-center"><a href="./${el.id}">${el.title}</a></div>
-                <div class="col text-right">${el.name}</div>
+                <div class="col hash">${_get_date_diff_str(el.timestamp)}</div>
+                <div class="col text-center"><a href="./${el.id}">${
+          el.title
+        }</a></div>
+                <div class="col text-right" onclick="_show_user('${
+                  el.user_id
+                }')"><a href="#">${el.name}</a></div>
         </div>
         </div>
         `;
@@ -59,21 +64,24 @@ document.addEventListener("DOMContentLoaded", () => {
 //   }
 // }
 
-function _show_user() {
+function _show_user(id) {
   _hide_display_all();
   document.querySelector("#_display_user").hidden = false;
-  _focus_user(document.querySelector("#user_name").innerHTML);
+  _focus_user(id ? id : getCookie("id"), id == getCookie("id") || id == null);
 }
 
-function _focus_user(name) {
-  document.querySelector("#_display_user_user_name").innerHTML = name;
+function _focus_user(name, owner) {
+  console.log(owner);
+  console.log(name);
   fetch("/api/vote/" + name)
     .then((res) => {
       return res.json();
     })
     .then((res) => {
+      document.querySelector("#_display_user_user_name").innerHTML =
+        res.user_name;
       temp1 = "";
-      res.forEach((el) => {
+      res.data.forEach((el) => {
         temp1 += `
         <div class="card" style="margin: 5px 0;">
         <div class="card-body row" style="padding: 5px 14px;">
@@ -111,5 +119,28 @@ function clearFileInput(ctrl) {
   } catch (ex) {}
   if (ctrl.value) {
     ctrl.parentNode.replaceChild(ctrl.cloneNode(true), ctrl);
+  }
+}
+
+function _get_date_diff_str(timestamp) {
+  if (!timestamp) return "-";
+  diff = (new Date() - new Date(timestamp)) / 1000 / 60 / 60;
+  if (diff < 1) {
+    temp1 = Math.floor((diff - Math.floor(diff)) * 60);
+    if (temp1 == 0) return "now";
+    return temp1 + "m";
+  } else if (diff < 24) {
+    return (
+      Math.floor(diff) + "h " + Math.floor((diff - Math.floor(diff)) * 60) + "m"
+    );
+  } else {
+    return (
+      Math.floor(diff / 24) +
+      "d " +
+      Math.floor(diff % 24) +
+      "h " +
+      Math.floor((diff - Math.floor(diff)) * 60) +
+      "m"
+    );
   }
 }

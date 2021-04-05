@@ -62,66 +62,77 @@
             <div class="container" id="_display_main">
                 <div class="card">
                     <div class="card-header text-center">
-                        RECENT VOTES
+                        10 RECENT VOTES
                     </div>
                 </div>
                 <div id="_recent_vote"></div>
             </div>
 
             <div class="container" id="_display_user" hidden>
-                <div class="card">
-                    <div class="card-header text-center">
-                        <span id="_display_user_user_name"></span>'s RECENT VOTES
+                <div class="card p-3">
+                    <div class="d-flex align-items-center">
+                        <div class="image"> <img src="/global/user_icon.png" class="rounded" width="155"> </div>
+                        <div class="ml-3 w-100">
+                            <h4 class="mb-0 mt-0"><span id="_display_user_user_name"></span></h4>
+                            <span>Photographer</span>
+                            <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+                                <div class="d-flex flex-column"> I love foto-vote.com!</div>
+                            </div>
+                        </div>
                     </div>
+                    <div class="card">
+                        <div class="card-header text-center">
+                            ALL VOTES
+                        </div>
+                    </div>
+                    <div id="_display_user_recent_vote"></div>
                 </div>
-                <div id="_display_user_recent_vote"></div>
             </div>
-
-    </div>
-    <div class="container" id="_display_form" hidden>
-        <form action="/api/upload" method="post" id="form">
-            <div class="mb-3">
-                <label for="Title" class="form-label">title</label>
-                <input type="text" class="form-control" id="Title" name="Title" required>
-                <small class="form-text text-muted">give a title for this group of works</small>
-            </div>
-            <div class="mb-3">
-                <label for="files" class="form-label">Your images</label>
-                <input class="form-control" type="file" id="files" name="files" accept="image/*" multiple required>
-                <!-- <div class="alert alert-warning" role="alert" style="margin-top: 5px;" hidden id="file_warn">
+            <div class="container" id="_display_form" hidden>
+                <form action="/api/upload" method="post" id="form">
+                    <div class="mb-3">
+                        <label for="Title" class="form-label">title</label>
+                        <input type="text" class="form-control" id="Title" name="Title" required>
+                        <small class="form-text text-muted">give a title for this group of works</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="files" class="form-label">Your images</label>
+                        <input class="form-control" type="file" id="files" name="files" accept="image/*" multiple
+                            required>
+                        <!-- <div class="alert alert-warning" role="alert" style="margin-top: 5px;" hidden id="file_warn">
                             Please choose only 20 photos at most.
                         </div> -->
+                        <small class="form-text text-muted">
+                            choose your works to upload for others vote.<br>
+                            the recommend number of photo per vote is: 10-20.
+                        </small>
+                    </div>
+                    <input type="text" class="form-control" name="name" id="submit_name" value="" hidden>
+                    <input type="text" class="form-control" name="user_id" id="submit_id" value="" hidden>
+                    <button type="submit" id="submit_button" class="btn btn-primary">Upload</button>
+                    <small class="form-text text-muted">
+                        the works submitted that will published on the internet, please consider before upload your
+                        works.<br>
+                        the url to voting page will show to you after uploaded, please copy and save that.
+                    </small>
+                </form>
+            </div>
+
+            <div class="container" id="result" hidden>
+                url to voting page for your works:
+                <div class="form-group mx-sm-3 mb-2  flex-fill">
+                    <label for="ren_url" class="sr-only">ren_url</label>
+                    <input type="text" class="form-control flex-fill" id="ren_url">
+                </div>
+                <div class="alert alert-success" role="alert" hidden id="copied">
+                    Copied to clipboard!
+                    <small class="form-text text-muted">for mobile user, please click copy to copy.</small>
+                </div>
                 <small class="form-text text-muted">
-                    choose your works to upload for others vote.<br>
-                    the recommend number of photo per vote is: 10-20.
+                    you can now copy and send this url to your friends to help you vote your works.<br>
+                    the url only show to you once, please remember or store this url into your note or brain.
                 </small>
             </div>
-            <input type="text" class="form-control" name="name" id="submit_name" value="" hidden>
-            <input type="text" class="form-control" name="user_id" id="submit_id" value="" hidden>
-            <button type="submit" id="submit_button" class="btn btn-primary">Upload</button>
-            <small class="form-text text-muted">
-                the works submitted that will published on the internet, please consider before upload your
-                works.<br>
-                the url to voting page will show to you after uploaded, please copy and save that.
-            </small>
-        </form>
-    </div>
-
-    <div class="container" id="result" hidden>
-        url to voting page for your works:
-        <div class="form-group mx-sm-3 mb-2  flex-fill">
-            <label for="ren_url" class="sr-only">ren_url</label>
-            <input type="text" class="form-control flex-fill" id="ren_url">
-        </div>
-        <div class="alert alert-success" role="alert" hidden id="copied">
-            Copied to clipboard!
-            <small class="form-text text-muted">for mobile user, please click copy to copy.</small>
-        </div>
-        <small class="form-text text-muted">
-            you can now copy and send this url to your friends to help you vote your works.<br>
-            the url only show to you once, please remember or store this url into your note or brain.
-        </small>
-    </div>
     </div>
     </section>
     <!-- Footer -->

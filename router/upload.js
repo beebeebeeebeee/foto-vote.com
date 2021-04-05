@@ -52,6 +52,7 @@ router.post("/", upload.array("files", 200), async (req, res) => {
       user_id: form_id,
       title: form_title,
       images: images,
+      timestamp: new Date(),
       votes: [],
     })
     .write();

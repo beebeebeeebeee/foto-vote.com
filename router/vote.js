@@ -21,29 +21,27 @@ router.get("/all", (req, res) => {
       .get("posts")
       .value()
       .map((e) => {
-        return { id: e.id, name: e.name, title: e.title };
+        return { id: e.id, user_id: e.user_id, name: e.name, title: e.title, timestamp: e.timestamp };
       })
-      .reverse()
+      .reverse().slice(0,10)
   );
 });
 
-router.get("/:name", (req, res) => {
+router.get("/:user_id", (req, res) => {
   const adapter = new FileSync("db.json");
   const db = low(adapter);
-  console.log(db
-    .get("posts")
-    .filter({ name: req.params.name })
-    .value())
-  res.status(200).send(
-    db
+
+  res.status(200).send({
+    user_name: db.get("account").filter({ id: req.params.user_id }).value()[0].name,
+    data: db
       .get("posts")
-      .filter({ name: req.params.name })
+      .filter({ user_id: req.params.user_id })
       .value()
       .map((e) => {
         return { id: e.id, name: e.name, title: e.title };
       })
-      .reverse()
-  );
+      .reverse(),
+  });
 });
 
 router.get("/result/:hash", (req, res) => {
