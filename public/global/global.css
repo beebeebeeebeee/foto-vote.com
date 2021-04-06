@@ -1,10 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Cutive+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400&family=Lobster&family=Cutive+Mono&display=swap');
 
-.title{
-    font-family: 'Lobster', cursive;
+*{
+    font-family: 'Lexend', sans-serif;
 }
 
-.hash{
-    font-family: 'Cutive Mono', monospace;
+.title {
+    font-family: 'Lobster', cursive !important;
+}
+
+.hash, .hash a {
+    font-family: 'Cutive Mono', monospace !important;
     color: green;
+}
+
+.main-title {
+    margin: -4px 12px 5px 12px !important;
+    padding: 7px 0 !important;
+    font-size: 16px;
+}
+
+a {
+    color: black;
+    text-decoration: none !important;
+    /* no underline */
+}
+
+.dropdown-menu-right {
+    right: 0;
+    left: auto;
+}
+
+input[type="color"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+input[type="week"],
+select:focus,
+textarea {
+  font-size: 16px;
 }

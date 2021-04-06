@@ -15,15 +15,19 @@ document.addEventListener("DOMContentLoaded", () => {
       res.forEach((el) => {
         temp1 += `
         <div class="card" style="margin: 5px 0;">
-        <div class="card-body row" style="padding: 5px 14px;">
-                <div class="col hash">${_get_date_diff_str(el.timestamp)}</div>
-                <div class="col text-center"><a href="./${el.id}">${
+          <div class="card-body row" style="padding: 5px 14px;">
+                  <div class="col" onclick="_show_user('${
+                    el.user_id
+                  }')"><a href="#">${el.name}</a></div>
+                  <div class="col hash text-right">${_get_date_diff_str(
+                    el.timestamp
+                  )}</div>
+          </div>
+          <div class="alert alert-light main-title">
+            <div class="col text-center"><a href="./${el.id}">${
           el.title
         }</a></div>
-                <div class="col text-right" onclick="_show_user('${
-                  el.user_id
-                }')"><a href="#">${el.name}</a></div>
-        </div>
+          </div>
         </div>
         `;
       });
@@ -85,14 +89,62 @@ function _focus_user(name, owner) {
         temp1 += `
         <div class="card" style="margin: 5px 0;">
         <div class="card-body row" style="padding: 5px 14px;">
-                <div class="col hash"><a href="./${el.id}">${el.id}</a></div>
-                <div class="col text-center"><a href="./${el.id}">${el.title}</a></div>
-                <div class="col text-right">${el.name}</div>
+                <div class="col-3 hash"><a href="./${el.id}">${el.id}</a></div>
+                <div class="col-${owner ? 7 : 9} text-right"><a href="./${
+          el.id
+        }">${el.title}</a></div>
+                ${
+                  owner
+                    ? "<div class='col-2 text-right'><button class='fas fa-trash' data-toggle='modal' data-target='#modal_" +
+                      el.id +
+                      "'></button></div>"
+                    : ""
+                }
         </div>
         </div>
+
+        <div class="modal fade" id="modal_${
+          el.id
+        }" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">ARE YOU SURE TO REMOVE THIS VOTE?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure to remove the "${el.title}" (<span class="hash">${
+          el.id
+        }</span>) vote?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick='_delete("${
+                el.id
+              }")'>Confirm (Remove)</button>
+            </div>
+          </div>
+        </div>
+      </div>
         `;
       });
       document.querySelector("#_display_user_recent_vote").innerHTML = temp1;
+    });
+}
+
+function _delete(hash) {
+  fetch(`/api/vote/delete/${hash}`)
+    .then((res) => {
+      if (res.status == 200) {
+        $(`#modal_${hash}`).modal("hide");
+        _show_user();
+      }
+      return res.json();
+    })
+    .then((res) => {
+      console.log(res);
     });
 }
 
