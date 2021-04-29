@@ -4,7 +4,7 @@ const disk = require('diskusage')
 
 router.get("/", async function (req, res) {
   let info = await disk.checkSync("/");
-  res.render("./main/index", {storage: `${formatBytes(info.free)}/${formatBytes(info.total)}`});
+  res.render("./main/index", {storage: `${formatBytes(info.total-info.free)}/${formatBytes(info.total)}`});
 });
 
 router.get("/login", function (req, res) {
