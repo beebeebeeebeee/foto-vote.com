@@ -4,22 +4,22 @@ const FileSync = require("lowdb/adapters/FileSync");
 
 module.exports = (req, res, next) => {
   const token = req.cookies["auth-token"];
-  if (!token) return next();
+  if (!token) res.status(401).send({ body: "Unauthorized" });
 
   try {
     const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-    this_user_id = verified.id;
+    req.user_id = verified.id;
 
     const adapter = new FileSync("db.json");
     const db = low(adapter);
 
-    data = db.get("account").find({ id: this_user_id }).value();
-    if (data) {
-      return res.status(200).send({ body: "already logged in!" });
+    data = db.get("posts").find({ id: req.params.hash }).value();
+    if (req.user_id == (data ? data.user_id : false)) {
+      next();
     } else {
-      return next();
+      return res.status(400).send({ body: "user id not correct!" });
     }
   } catch (err) {
-      return next();
+    return res.status(400).send({ body: err });
   }
 };

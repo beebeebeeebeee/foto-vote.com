@@ -74,16 +74,98 @@ function _show_user(id) {
   _focus_user(id ? id : getCookie("id"), id == getCookie("id") || id == null);
 }
 
+function _modal_icon() {
+  var formData = new FormData($("#modal_icon_upload")[0]);
+
+  $.ajax({
+    url: "/api/profile/icon",
+    type: "POST",
+    data: formData,
+    async: false,
+    success: function (res) {
+      $(`#modal_icon`).modal("hide");
+      _show_user()
+    },
+    cache: false,
+    contentType: false,
+    processData: false,
+  });
+}
+
+// function _modal_name(
+//   params = document.querySelector("#modal_name_input").value
+// ) {
+//   fetch("/api/profile/name", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ data: params }),
+//   }).then((res) => {
+//     $(`#modal_name`).modal("hide");
+//     res.status == 200 ? _show_user() : null;
+//   });
+// }
+
+function _modal_title(
+  params = document
+    .querySelector("#modal_title_input")
+    .value.replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+) {
+  if (document.querySelector("#modal_title_input_url").checked) {
+    console.log(params);
+    params = `<a class="coloredA" href="${params}">${params}</a>`;
+  }
+  fetch("/api/profile/title", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ data: params }),
+  }).then((res) => {
+    $(`#modal_title`).modal("hide");
+    res.status == 200 ? _show_user() : null;
+  });
+}
+
+function _modal_bio(
+  params = document
+    .querySelector("#modal_bio_input")
+    .value.replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\n/g, "<br>")
+) {
+  fetch("/api/profile/bio", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ data: params }),
+  }).then((res) => {
+    $(`#modal_bio`).modal("hide");
+    res.status == 200 ? _show_user() : null;
+  });
+}
+
 function _focus_user(name, owner) {
-  console.log(owner);
-  console.log(name);
   fetch("/api/vote/" + name)
     .then((res) => {
       return res.json();
     })
     .then((res) => {
+      console.log(res);
+      res.user.icon
+        ? (document.querySelector("#_display_user_icon").src = `./static/icon/${res.user.icon}`)
+        : null;
       document.querySelector("#_display_user_user_name").innerHTML =
-        res.user_name;
+        res.user.name;
+      document.querySelector("#_display_user_title").innerHTML = res.user.title
+        ? res.user.title
+        : "Photographer";
+      document.querySelector("#_display_user_bio").innerHTML = res.user.bio
+        ? res.user.bio
+        : "I love foto-vote.com!";
       temp1 = "";
       res.data.forEach((el) => {
         temp1 += `
@@ -121,7 +203,7 @@ function _focus_user(name, owner) {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" onclick='_delete("${
+              <button type="button" class="btn btn-danger" onclick='_delete("${
                 el.id
               }")'>Confirm (Remove)</button>
             </div>

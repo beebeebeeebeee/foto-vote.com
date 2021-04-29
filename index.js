@@ -32,6 +32,7 @@ app.use("/", require("./router/ejs/hash"));
 app.use("/api/upload", require("./router/upload"));
 app.use("/api/vote", require("./router/vote"));
 app.use("/api/user", require("./router/auth/auth"));
+app.use("/api/profile", require("./router/user"));
 
 app.get("/api/data/:hash", (req, res) => {
   const adapter = new FileSync("db.json");

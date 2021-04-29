@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
-const jwt = require("jsonwebtoken");
+const verifyTokenPost = require("./auth/verifyTokenPost");
+
 
 router.post("/:hash", (req, res) => {
   const adapter = new FileSync("db.json");
@@ -39,9 +40,10 @@ router.get("/:user_id", (req, res) => {
   const adapter = new FileSync("db.json");
   const db = low(adapter);
 
+  const {password, ...user} = db.get("account").filter({ id: req.params.user_id }).value()[0];
+
   res.status(200).send({
-    user_name: db.get("account").filter({ id: req.params.user_id }).value()[0]
-      .name,
+    user: user,
     data: db
       .get("posts")
       .filter({ user_id: req.params.user_id })
@@ -118,27 +120,12 @@ router.get("/result/:hash", (req, res) => {
     .send({ title: sc_data.title, name: sc_data.name, data: temp1 });
 });
 
-router.get("/delete/:hash", (req, res) => {
-  const token = req.cookies["auth-token"];
-  if (!token) res.status(401).send({ body: "Unauthorized" });
+router.get("/delete/:hash", verifyTokenPost, (req, res) => {
+  const adapter = new FileSync("db.json");
+  const db = low(adapter);
 
-  try {
-    const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-    this_user_id = verified.id;
-
-    const adapter = new FileSync("db.json");
-    const db = low(adapter);
-
-    data = db.get("posts").find({ id: req.params.hash }).value();
-    if (this_user_id == (data ? data.user_id : false)) {
-      db.get("posts").remove({ id: req.params.hash }).write();
-      res.status(200).send({ body: "OK!" });
-    } else {
-      res.status(400).send({ body: "user id not correct!" });
-    }
-  } catch (err) {
-    res.status(400).send({ body: err });
-  }
+  db.get("posts").remove({ id: req.params.hash }).write();
+  res.status(200).send({ body: "OK!" });
 });
 
 module.exports = router;

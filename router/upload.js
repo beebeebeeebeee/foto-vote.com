@@ -14,7 +14,6 @@ createFolder("./public/hash/images");
 
 //multer
 var upload = require("./function/uploadMulter");
-const e = require("express");
 
 router.post("/", upload.array("files", 200), async (req, res) => {
   const adapter = new FileSync("db.json");

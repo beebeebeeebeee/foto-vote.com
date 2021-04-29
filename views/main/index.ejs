@@ -63,13 +63,33 @@
 
             <div class="container" id="_display_user" hidden>
                 <div class="card p-2">
-                    <div class="d-flex align-items-center">
-                        <div class="image"> <img src="/global/user_icon.png" class="rounded" width="155"> </div>
+                    <div class="d-flex align-items-center" style="padding-bottom: 10px;">
+                        <div class="image">
+                            <img src="/global/user_icon.png" class="rounded" width="110" id="_display_user_icon">
+                        </div>
                         <div class="ml-3 w-100">
-                            <h4 class="mb-0 mt-0"><span id="_display_user_user_name"></span></h4>
-                            <span>Photographer</span>
+                            <h4 class="mb-0 mt-0 row">
+                                <span id="_display_user_user_name" class="col-8"></span>
+                                <span class="dropdown show text-right float-right col-4" id="owner-settings">
+                                    <a class="btn btn-light dropdown-toggle" href="#" role="button"
+                                        id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false" style="padding: 0 5px; margin-bottom: 1px;">
+                                        ···
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                        <button type="button" data-toggle="modal" class="dropdown-item"
+                                            data-target="#modal_icon">Change Icon</button>
+                                        <button type="button" data-toggle="modal" class="dropdown-item"
+                                            data-target="#modal_title">Edit Title</button>
+                                        <button type="button" data-toggle="modal" class="dropdown-item"
+                                            data-target="#modal_bio">Edit Bio</button>
+                                    </div>
+                                </span>
+                            </h4>
+                            <span id="_display_user_title">Photographer</span>
                             <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
-                                <div class="d-flex flex-column"> I love foto-vote.com!</div>
+                                <div class="d-flex flex-column" id="_display_user_bio"> I love foto-vote.com!</div>
                             </div>
                         </div>
                     </div>
@@ -99,6 +119,7 @@
                             choose your works to upload for others vote.<br>
                             the recommend number of photo per vote is: 10-20.
                         </small>
+                        
                     </div>
                     <input type="text" class="form-control" name="name" id="submit_name" value="" hidden>
                     <input type="text" class="form-control" name="user_id" id="submit_id" value="" hidden>
@@ -107,6 +128,10 @@
                         the works submitted that will published on the internet, please consider before upload your
                         works.<br>
                         the url to voting page will show to you after uploaded, please copy and save that.
+                    </small>
+
+                    <small class="form-text text-muted">
+                        current storage: <%=storage%>
                     </small>
                 </form>
             </div>
@@ -125,6 +150,120 @@
                     you can now copy and send this url to your friends to help you vote your works.<br>
                     the url only show to you once, please remember or store this url into your note or brain.
                 </small>
+            </div>
+
+            <!-- ICON Modal -->
+            <div class="modal fade" id="modal_icon" tabindex="-1" role="dialog" aria-labelledby="modal_icon_Label"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal_icon_Label">CHANGE ICON</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="modal_icon_upload">
+                                <div class="form-group">
+                                    <label for="modal_icon_input">Upload a new icon for your profile.</label>
+                                    <input type="file" class="form-control-file" accept="image/*" name="icon" id="modal_icon_input">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="_modal_icon()">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NAME Modal -->
+            <div class="modal fade" id="modal_name" tabindex="-1" role="dialog" aria-labelledby="modal_name_Label"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal_name_Label">EDIT NAME</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="modal_name_input">Input new name:</label>
+                                    <input type="text" class="form-control" id="modal_name_input">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="_modal_name()">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TITLE Modal -->
+            <div class="modal fade" id="modal_title" tabindex="-1" role="dialog" aria-labelledby="modal_title_Label"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal_title_Label">EDIT TITLE</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="modal_title_input">Input new title:</label>
+                                    <input type="text" class="form-control" id="modal_title_input">
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="modal_title_input_url">
+                                    <label class="form-check-label" for="modal_title_input_url">
+                                      Set as url
+                                    </label>
+                                  </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="_modal_title()">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BIO Modal -->
+            <div class="modal fade" id="modal_bio" tabindex="-1" role="dialog" aria-labelledby="modal_bio_Label"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal_bio_Label">EDIT BIO</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="modal_bio_input">Input new bio:</label>
+                                    <textarea type="text" class="form-control" id="modal_bio_input"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="_modal_bio()">Save changes</button>
+                        </div>
+                    </div>
+                </div>
             </div>
     </div>
     </section>
