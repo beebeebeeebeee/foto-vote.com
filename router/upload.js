@@ -6,6 +6,7 @@ var fs = require("fs");
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 var sizeOf = require("image-size");
+const exif = require("./function/exif")
 
 //create temp and images folder
 var createFolder = require("./function/createFolder");
@@ -42,6 +43,12 @@ router.post("/", upload.array("files", 200), async (req, res) => {
     console.log(dimensions);
     images[index].portrait = dimensions.height > dimensions.width;
     fs.unlinkSync(`./public/hash/temp/${el.filename}`);
+
+    if(isIphoneName(el.filename)){
+      data = await exif(`./public/hash/images/${el.filename}`)
+      images[index].RawFilename = [data.data[0].RawFileName.split(".").slice(0,-1).join("."),el.filename.split(".").pop()].join(".")
+    }
+    
   });
 
   db.get("posts")
@@ -63,6 +70,11 @@ async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
     await callback(array[index], index, array);
   }
+}
+
+function isIphoneName(name){
+  name = name.split("-").slice(1).join("-")
+  return name.length - name.replace(/[A-Z0-9-]/g,"").length == 36
 }
 
 module.exports = router;

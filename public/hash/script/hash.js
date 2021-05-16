@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     temp1 += `
         <div id="post_${index}"></div>
         <div class="card" style="margin-bottom: 10px">
-            <h5 class="card-header" style="font-size: 10px;">${vote_result[index].element.slice(
+            <h5 class="card-header" style="font-size: 10px;">${element.RawFilename?element.RawFilename: vote_result[index].element.slice(
               vote_result[index].element.indexOf("-") + 1
             )}</h5>
             ${img_direction}
