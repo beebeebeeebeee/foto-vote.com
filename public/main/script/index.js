@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#submit_button").innerHTML = "Uploading ...";
 
     var fd = new FormData($(this)[0]);
-    socket = io.connect(`ws://${window.location.host}`,{secure: true});
+    socket = io.connect(`wss://${window.location.host}`,{secure: true});
     socket.on("progress",percentComplete=>{
       document.querySelector("#progress-upload-bar").classList.add("bg-success")
       document.querySelector(
