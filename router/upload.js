@@ -46,7 +46,11 @@ router.post("/", upload.array("files", 200), async (req, res) => {
 
     if(isIphoneName(el.filename)){
       data = await exif(`./public/hash/images/${el.filename}`)
-      images[index].RawFilename = [data.data[0].RawFileName.split(".").slice(0,-1).join("."),el.filename.split(".").pop()].join(".")
+      try{
+        images[index].RawFilename = [data.data[0].RawFileName.split(".").slice(0,-1).join("."),el.filename.split(".").pop()].join(".")
+      }catch(e){
+        console.log("could not found RawFileName",el.filename,data.data[0].RawFileName)
+      }
     }
     
   });
