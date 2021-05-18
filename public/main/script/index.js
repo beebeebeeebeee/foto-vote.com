@@ -47,6 +47,40 @@ document.addEventListener("DOMContentLoaded", () => {
       data: fd,
       processData: false,
       contentType: false,
+      xhr: function () {
+        var xhr = new window.XMLHttpRequest();
+        document.querySelector("#progress-upload").hidden = false;
+
+        xhr.upload.addEventListener(
+          "progress",
+          function (evt) {
+            if (evt.lengthComputable) {
+              var percentComplete = evt.loaded / evt.total;
+              percentComplete = parseInt(percentComplete * 100);
+              console.log(percentComplete);
+              document.querySelector(
+                "#progress-upload-bar"
+              ).style.width = `${percentComplete}%`;
+              document.querySelector("#progress-upload-bar").ariaValueNow =
+                percentComplete;
+              document.querySelector(
+                "#progress-upload-status"
+              ).innerHTML = `uploading... ${percentComplete}%`;
+              if (percentComplete === 100)
+                document.querySelector(
+                  "#progress-upload-status"
+                ).innerHTML = `server converting images...
+                <span class="spinner-border spinner-border-sm" role="status">
+                  <span class="sr-only">Loading...</span>
+                </span>
+                `;
+            }
+          },
+          false
+        );
+
+        return xhr;
+      },
       success: function (res) {
         _show_result();
         document.querySelector(
@@ -84,7 +118,7 @@ function _modal_icon() {
     async: false,
     success: function (res) {
       $(`#modal_icon`).modal("hide");
-      _show_user()
+      _show_user();
     },
     cache: false,
     contentType: false,
@@ -156,7 +190,9 @@ function _focus_user(name, owner) {
     .then((res) => {
       console.log(res);
       res.user.icon
-        ? (document.querySelector("#_display_user_icon").src = `./static/icon/${res.user.icon}`)
+        ? (document.querySelector(
+            "#_display_user_icon"
+          ).src = `./static/icon/${res.user.icon}`)
         : null;
       document.querySelector("#_display_user_user_name").innerHTML =
         res.user.name;
