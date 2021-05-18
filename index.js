@@ -8,6 +8,10 @@ const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 const adapter = new FileSync("db.json");
 const db = low(adapter);
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
+app.io = io;
 
 app.set('view engine', 'ejs');
 
@@ -43,6 +47,6 @@ app.get("/api/data/:hash", (req, res) => {
 });
 
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`express is listening on http://localhost:${port}/`);
 });

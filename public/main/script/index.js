@@ -41,6 +41,18 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#submit_button").innerHTML = "Uploading ...";
 
     var fd = new FormData($(this)[0]);
+    socket = io.connect("ws://localhost:3000");
+    socket.on("progress",percentComplete=>{
+      document.querySelector("#progress-upload-bar").classList.add("bg-success")
+      document.querySelector(
+        "#progress-upload-bar"
+      ).style.width = `${percentComplete}%`;
+      document.querySelector("#progress-upload-bar").ariaValueNow =
+        percentComplete;
+      document.querySelector(
+        "#progress-upload-status"
+      ).innerHTML = `server converting images... ${percentComplete}%`;
+    })
     $.ajax({
       url: $("#form").attr("action"),
       type: "POST",
@@ -74,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   <span class="sr-only">Loading...</span>
                 </span>
                 `;
+                
             }
           },
           false
@@ -92,15 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return false;
   });
 });
-
-// function _on_select(e) {
-//   if (e.files.length > 20) {
-//     clearFileInput(e);
-//     document.querySelector("#file_warn").hidden = false;
-//   } else {
-//     document.querySelector("#file_warn").hidden = true;
-//   }
-// }
 
 function _show_user(id) {
   _hide_display_all();

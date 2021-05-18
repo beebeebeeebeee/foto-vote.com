@@ -1,4 +1,5 @@
 const express = require("express");
+const app = express();
 const router = express.Router();
 const getToken = require("./function/getToken");
 const sharp = require("sharp");
@@ -6,7 +7,9 @@ var fs = require("fs");
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 var sizeOf = require("image-size");
-const exif = require("./function/exif")
+const exif = require("./function/exif");
+
+
 
 //create temp and images folder
 var createFolder = require("./function/createFolder");
@@ -17,6 +20,7 @@ createFolder("./public/hash/images");
 var upload = require("./function/uploadMulter");
 
 router.post("/", upload.array("files", 200), async (req, res) => {
+
   const adapter = new FileSync("db.json");
   const db = low(adapter);
 
@@ -33,26 +37,34 @@ router.post("/", upload.array("files", 200), async (req, res) => {
     console.log(el);
     return { filename: el.filename, portrait: null };
   });
-  
+
+  req.app.io.emit('progress', 0);
+
   await asyncForEach(images, async (el, index) => {
+  req.app.io.emit('progress', parseInt(index/images.length*100));
     await sharp(`./public/hash/temp/${el.filename}`, { failOnError: false })
       .jpeg({ quality: 30 })
       .withMetadata()
       .toFile(`./public/hash/images/${el.filename}`);
     var dimensions = sizeOf(`./public/hash/temp/${el.filename}`);
-    console.log(dimensions);
     images[index].portrait = dimensions.height > dimensions.width;
     fs.unlinkSync(`./public/hash/temp/${el.filename}`);
 
-    if(isIphoneName(el.filename)){
-      data = await exif(`./public/hash/images/${el.filename}`)
-      try{
-        images[index].RawFilename = [data.data[0].RawFileName.split(".").slice(0,-1).join("."),el.filename.split(".").pop()].join(".")
-      }catch(e){
-        console.log("could not found RawFileName",el.filename,data.data[0].RawFileName)
+    if (isIphoneName(el.filename)) {
+      try {
+        data = await exif(`./public/hash/images/${el.filename}`);
+        images[index].RawFilename = [
+          data.data[0].RawFileName.split(".").slice(0, -1).join("."),
+          el.filename.split(".").pop(),
+        ].join(".");
+      } catch (e) {
+        console.log(
+          "could not found RawFileName",
+          el.filename,
+          data.data[0].RawFileName
+        );
       }
     }
-    
   });
 
   db.get("posts")
@@ -76,9 +88,9 @@ async function asyncForEach(array, callback) {
   }
 }
 
-function isIphoneName(name){
-  name = name.split("-").slice(1).join("-")
-  return name.length - name.replace(/[A-Z0-9-]/g,"").length == 36
+function isIphoneName(name) {
+  name = name.split("-").slice(1).join("-");
+  return name.length - name.replace(/[A-Z0-9-]/g, "").length == 36;
 }
 
 module.exports = router;
